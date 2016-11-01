@@ -1,0 +1,29 @@
+digraph g{
+    graph [fontname="FangSong"];
+    edge [fontname="FangSong"];
+    node [fontname="Microsoft YaHei", shape=box]{
+        multithread[label="多线程，程序大部分时间花费在等待网页响应上"]
+        console_encode[label="检测终端编码方式"];
+        is_online [label="检测主机是否联网"];
+        link_is_valid [label="检查网址是否合法"];
+        set_timeout [label="设置获取网页超时时间，
+        最多3次重连。避免因获取网页时间过长而导致程序卡顿，
+        默认request没有设置超时时间"];
+        get_info [label="获取帖子基本信息，贴子页数，标题，楼主，发表时间"];
+        see_lz [label="是否只保存楼主信息"];
+        comment [label="是否保存评论"];
+        type [label="保存格式"];
+        
+        md_pic [label="是否保存图片"];
+        md_emoji [label="是否将表情图片转换成字符表情"];
+        
+        pdf_create [label="默认保存图片"];
+    }
+
+    console_encode -> is_online -> link_is_valid -> set_timeout -> get_info -> see_lz -> comment ->type;
+    
+    type -> md_emoji [label="保存为markdown"];
+    md_emoji -> md_pic[label="默认是使用在线图片"];
+
+    type -> pdf_create [label ="保存为pdf"];
+}
