@@ -71,7 +71,7 @@ class Info:
     def __init__(self):
         self.user_name=self.pid=self.post_nu=self.content=self.islouzhu=""
 
-class tieba:
+class TieBa:
     def __init__(self, url_num,see_lz,current_pagenum=1):
         if(see_lz):
             self.see_lz=1
@@ -225,7 +225,7 @@ class tieba:
             self.curr_page_err=1
             return info
 
-    def start(self):
+    def GetTiezi(self):
         self.color.printcolor("*****  正在获取"+self.base_url+"  *****",
                 self.color.yellow)
         self.get_pageinfo()
@@ -235,10 +235,6 @@ class tieba:
         if(self.total_page!=0):
             while(self.current_pagenum<=self.total_page):
                 self.curr_page_err=0  #初始化
-                self.color.printcolor("*****  正在获取第"+
-                        str(self.current_pagenum)+
-                        "页(共"+str(self.total_page)+"页)  *****",
-                        self.color.yellow)
                 html=self.get_html(self.current_pagenum)
                 post_list=self.get_postlist(html)
                 ceng=1
@@ -259,7 +255,8 @@ class tieba:
                         info.user_name+="(楼主)"
                     page_content=page_content+info.user_name+":\n\n"+text+"\n\n"+"——"+info.post_nu+"  "+info.date+"\n"*nu+comment
                     page_content=page_content+"\n\n"+"= "*10+"\n\n"
-                    self.color.printcolor("已完成"+"%.2f" %(ceng/total_ceng*100)+"%",
+                    self.color.printcolor("*****  正在获取第"+str(self.current_pagenum)+
+                        "页(共"+str(self.total_page)+"页)已完成%.2f" %(ceng/total_ceng*100)+"%  *****",
                             self.color.yellow,endchar="")
                     ceng+=1
                     self.color.printcolor("\r",endchar="")
@@ -268,8 +265,8 @@ class tieba:
                             "页失败  正在重新获取*****",self.color.red)
                 else:
                     f.write(page_content)
-                    self.color.printcolor("*****  获取第"+str(self.current_pagenum)+"页成功  *****",
-                        self.color.green)
+                    #self.color.printcolor("*****  获取第"+str(self.current_pagenum)+"页成功  *****",
+                     #   self.color.green)
                     self.current_pagenum+=1
         f.close()
 
@@ -279,5 +276,5 @@ if(__name__=="__main__"):
     if(len(sys.argv)!=2):
         message.printcolor("require argument",message.red)
     else:
-        tiezi=tieba(sys.argv[1])
-        tiezi.start()
+        tiezi=TieBa(sys.argv[1])
+        tiezi.GetTiezi()

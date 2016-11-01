@@ -19,11 +19,11 @@ parser.add_opt("cur_page","-s","--start-page",
 
 options=parser.parse_arg(len(sys.argv)-1,sys.argv[1:])
 if(hasattr(options,"cur_page")):
-    tiezi=tieba.tieba(options.post_nu,options.see_lz,
+    tiezi=tieba.TieBa(options.post_nu,options.see_lz,
             current_pagenum=options.cur_page)
 else:
-    tiezi=tieba.tieba(options.post_nu,options.see_lz)
+    tiezi=tieba.TieBa(options.post_nu,options.see_lz)
 if(options.list_info):
     tiezi.get_pageinfo()
 else:
-    tiezi.start()
+    tiezi.GetTiezi()
